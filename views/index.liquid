@@ -1,14 +1,77 @@
-<h1>Zet 'm op team {{ teamName }}!</h1>
+{% render 'partials/head.liquid', title: 'Squad page' %}
 
-<h2>Huidige berichten</h2>
+
+<body>
+  <div class="wrapper">
+    <div class="top-bar">
+      <h1>{{ Squad Page }}</h1>
+    </div>
+    <div class="img-area">
+        {% if person.github_handle %}
+          <img src="https://github.com/{{ person.github_handle }}.png" alt="{{ person.name }}">
+        {% else %}
+          <img src="https://static.vecteezy.com/system/resources/previews/014/194/215/original/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg">
+        {% endif %}
+    </div>
+      <body>  
+
+ <main class="container">
+  <div class="arrow" onclick="prevItem()">
+    <img src="https://www.flaticon.com/free-icon/back_130882">
+      <div class="arrow" 
+  </div>
+    <div>
+
+       <section class="informatie">
+       {% if person.github_handle %}
+          <img src="https://github.com/{{ person.github_handle }}.png">
+        {% else %}
+          <img src="Default Avatar {{ person.name }}">
+        {% endif %}
+        
+    <img src="https://www.flaticon.com/free-icon/next_5343102">
+    <a href="{{ person.id }}">
+      <article class="student">
+        <h1>{{ person.name }}</h1>
+        <ul>
+                <li>Favorite HTML attribute: {{ person.fav_attribute }}</li>
+                <li>Favorite CSS property: {{ person.fav_property }}</li>
+                <li>Favorite JavaScript feature: {{ person.fav_feature }}</li>
+                <li>Handle: {{ person.github_handle }}</li>
+                <li>Birthdate: {{ person.birthdate | date: "%d-%m-%Y" }}</li>
+        </ul>
+        
+
+      </article>
+    </a>
+</section>
+
+    </div>
+
+  <div class="zoekbalk">
+        <input type="text" id="zoekfunctie" placeholder="Zoek iemand uit je squad!">
+        <div class="results">
+            {% for person in persons %}
+                <div class="fav_property" data-title="{{ person.value | downcase }}">
+                    {{ person.github_handle }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+    </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% for message in messages %}
 <p>{{ message.from }}: {{ message.text }} @{{ message.created | date: '%d-%m-%Y %H:%M' }}</p>
 {% else %}
-<p>Er zijn nog geen berichten voor dit team.</p>
+<p>Er zijn nog geen comments.</p>
 {% endfor %}
 
-<h2>Voeg een bericht toe</h2>
+<h2>Voeg een comment toe</h2>
 <form method="post" action="/">
   <label>
     Naam:
@@ -20,3 +83,9 @@
   </label>
   <button type="submit">Verstuur</button>
 </form>
+
+  <script src="js/script.js"></script>
+ </main>
+
+
+{% render 'partials/foot.liquid', squads: squads %}
