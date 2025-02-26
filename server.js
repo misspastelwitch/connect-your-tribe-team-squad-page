@@ -29,6 +29,10 @@ app.get('/', async function (request, response) {
   })
 })
 
+app.get('/landing', async function (request, response) {  
+  response.render('landingpagina.liquid')
+})
+
 app.post('/', async function (request, response) {
   await fetch('https://fdnd.directus.app/items/messages/', {
     method: 'POST',
