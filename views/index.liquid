@@ -1,11 +1,37 @@
 {% render 'partials/head.liquid', title: 'Squad page' %}
 
 
-<body>
-  <div class="wrapper">
-    <div class="top-bar">
-      <h1>{{ Squad Page }}</h1>
-    </div>
+<main>
+
+<h1>Welkom bij de Team Awesome squad page</h1>
+<h2>Onze studenten</h2>
+
+<section class="filteren">
+
+  <h1>Squadpage</h1>
+
+  <p class="label">Filter met hobbby</p>
+
+  <ul class="filter-hobby">
+    <li><a class="filter" href="/hobby/gamen" class="button">Gamen</a></li>
+    <li><a class="filter" href="/hobby/dammen" class="button">Dammen</a></li>
+    <li><a class="filter" href="/hobby/chillen" class="button">chillen</a></li>
+    <li><a class="filter" href="/hobby/coden" class="button">coden</a></li>
+    <li><a class="filter" href="/hobby/festivals" class="button">festivals</a></li>
+    <li><a class="filter" href="/hobby/fitness" class="button">fitness</a></li>
+    <li><a class="filter" href="/hobby/haken" class="button">haken</a></li>
+    <li><a class="filter" href="/hobby/lezen" class="button">lezen</a></li>
+    <li><a class="filter" href="/hobby/schaken" class="button">schaken</a></li>
+    <li><a class="filter" href="/hobby/sporten" class="button">sporten</a></li>
+    <li><a class="filter" href="/hobby/uitgaan" class="button">uitgaan</a></li>
+  </ul>
+
+
+  <ul id="person-list">
+    {% for person in persons %}
+
+    <li class="student">
+
     <div class="img-area">
         {% if person.github_handle %}
           <img src="https://github.com/{{ person.github_handle }}.png" alt="{{ person.name }}">
@@ -13,84 +39,24 @@
           <img src="https://static.vecteezy.com/system/resources/previews/014/194/215/original/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg">
         {% endif %}
     </div>
-      <body>  
+    
+      <h2>{{ person.name }}</h2>
+            <p>{{ person.fav_hobby | default: "Ik heb geen favoritete hobby" }}
+      </p>
+      <div class="bio">
+        <p>{{ person.bio | default: "Ik heb geen bio | truncatewords: 30 }}</p>
+      </div>
 
- <main class="container">
-  <div class="arrow" onclick="prevItem()">
-    <img src="https://www.flaticon.com/free-icon/back_130882">
-      <div class="arrow" 
-  </div>
-    <div>
+        </a>
+      </div>
 
-       <section class="informatie">
-       {% if person.github_handle %}
-          <img src="https://github.com/{{ person.github_handle }}.png">
-        {% else %}
-          <img src="Default Avatar {{ person.name }}">
-        {% endif %}
-        
-    <img src="https://www.flaticon.com/free-icon/next_5343102">
-    <a href="{{ person.id }}">
-      <article class="student">
-        <h1>{{ person.name }}</h1>
-        <ul>
-                <li>Favorite HTML attribute: {{ person.fav_attribute }}</li>
-                <li>Favorite CSS property: {{ person.fav_property }}</li>
-                <li>Favorite JavaScript feature: {{ person.fav_feature }}</li>
-                <li>Handle: {{ person.github_handle }}</li>
-                <li>Birthdate: {{ person.birthdate | date: "%d-%m-%Y" }}</li>
-        </ul>
-        
+    </li>
 
-      </article>
-    </a>
+    {% endfor %}
+  </ul>
+
 </section>
 
-    </div>
-
-  <div class="zoekbalk">
-
- <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Zoek iemand uit je squad!">
-
-<ul id="myUL">
-  <li><a href="#">FDND student</a></li>
-            {% for person in persons %}
-                <div class="fav_property" data-title="{{ person.value | downcase }}">
-                    {{ person.github_handle }}
-                </div>
-            {% endfor %}
-</ul>
-
-<script>
-function myFunction() {
-  // Declare variables
-  var input, filter, ul, li, a, i, txtValue;
-  input = document.getElementById('myInput');
-  filter = input.value.toUpperCase();
-  ul = document.getElementById("myUL");
-  li = ul.getElementsByTagName('li');
-
-  // Loop through all list items, and hide those who don't match the search query
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("a")[0];
-    txtValue = a.textContent || a.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-  }
-}
-</script>
-
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 
 {% for message in messages %}
 <p>{{ message.from }}: {{ message.text }} @{{ message.created | date: '%d-%m-%Y %H:%M' }}</p>
