@@ -49,21 +49,48 @@
     </div>
 
   <div class="zoekbalk">
-        <input type="text" id="zoekfunctie" placeholder="Zoek iemand uit je squad!">
-        <div class="results">
+
+ <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Zoek iemand uit je squad!">
+
+<ul id="myUL">
+  <li><a href="#">FDND student</a></li>
             {% for person in persons %}
                 <div class="fav_property" data-title="{{ person.value | downcase }}">
                     {{ person.github_handle }}
                 </div>
             {% endfor %}
-        </div>
-    </div>
-    </div>
-    </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</ul>
+
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 {% for message in messages %}
 <p>{{ message.from }}: {{ message.text }} @{{ message.created | date: '%d-%m-%Y %H:%M' }}</p>
