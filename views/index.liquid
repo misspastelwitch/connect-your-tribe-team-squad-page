@@ -1,20 +1,42 @@
-{% render 'partials/head.liquid', title: 'Squad page' %}
+{% render 'partials/head.liquid'
+  , title: 'Squad page' %}
 
 
-<body>
- <main class="container">
-  {% comment %} 
-    Stap1: Maak een kaartje voor 1 pizzalover
-  {% endcomment %}
+<main class="container">
+  <h2>Filter by Favorite Food</h2>
+
+  <div class="dropdown">
+    <input
+      type="text"
+      id="food-search"
+      placeholder="Search for a food..."
+      autocomplete="on">
+    <ul id="food-list" class="hidden">
+      <li data-value="all">All Foods</li>
+      {% for food in foodOptions %}
+        <li data-value="{{ food }}">{{ food }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <button id="apply-filter">Apply Filter</button>
+
   {% for pizzaLover in pizzaLovers %}
-    <img src="{{ pizzaLover.avatar }}" alt="{{ pizzaLover.name }}">
-    <p>{{ pizzaLover.nickname }}</p> 
-    <p>Favorite Food: {{ pizzaLover.fav_kitchen }}</p> 
-    <p>Favorite Color: <span style="width: 20px; height: 20px; display: inline-block; background-color: {{ pizzaLover.fav_color }}"></span></p> 
-  {% endfor  %}
- 
-  <script src="js/script.js"></script>
- </main>
+    <img
+      src="{{ pizzaLover.avatar }}"
+      alt="{{ pizzaLover.name }}"
+      height="100"
+      width="100">
+    <p>{{ pizzaLover.name }}</p>
+    <p>Favorite Food: {{ pizzaLover.fav_kitchen }}</p>
+    <p>Favorite Color:
+      <span style="width: 20px; height: 20px; display: inline-block; background-color: {{ pizzaLover.fav_color }}"></span>
+    </p>
+  {% endfor %}
+
+  <script src="/js/script.js"></script>
+</main>
 
 
-{% render 'partials/foot.liquid', squads: squads %}
+{% render 'partials/foot.liquid'
+  , squads: squads %}
