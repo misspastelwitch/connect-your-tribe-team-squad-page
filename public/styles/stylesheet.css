@@ -1,0 +1,42 @@
+/* custom properties definieren en gebruiken */
+
+/* HUISSTIJL */
+body{
+  --background-color: linear-gradient(#3A3A3A, #000000);
+
+/* Kleuren  */
+  --card-background-color: #EAEAEA;
+  --text-color: #e8e8e8;
+  --button-color: #1ED760;
+
+/* Typografie */
+  --font-size-text: 16px;
+
+  --font-family-text: "Rubik Bubbles", sans-serif;
+  --font-family-details: "Arial", sans-serif;
+
+  --font-family: var(--font-family-text);
+  --font-weight: 400;
+  --font-style: normal;
+  
+
+/* buttons */
+  --arrow-button-background-color: #1ED760;
+  --text-button-background-color: #1ED760;
+
+}
+
+p { 
+  font-family: var(--font-family-text);
+  color: var(--card-text-color);
+
+}
+
+/* algemene styling */
+
+h1 {
+  font-family: var(--font-family-text);
+  font-size: var(--font-size-header-l);
+  color: var(--text-color);
+  text-align: center;
+}
