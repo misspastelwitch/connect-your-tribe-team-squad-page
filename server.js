@@ -18,20 +18,32 @@ app.set('views', './views')
 
 app.use(express.urlencoded({extended: true}))
 
-
 app.get('/', async function (request, response) {
-  const messagesResponse = await fetch(`https://fdnd.directus.app/items/messages/?filter={"for":"Team ${teamName}"}`)
-  const messagesResponseJSON = await messagesResponse.json()
+  console.log()
+  
+  // Haal alle personen uit de WHOIS API op, van dit jaar
+  const personResponse = await fetch(`https://fdnd.directus.app/items/person/?sort=name&fields=*,squads.squad_id.name,squads.squad_id.cohort&filter={"_and":[{"fav_kitchen": "Pizza"},{"squads":{"squad_id":{"tribe":{"name":"FDND Jaar 1"}}}},{"squads":{"squad_id":{"cohort":"2425"}}}]}`)
 
-  response.render('index.liquid', {
-    teamName: teamName,
-    messages: messagesResponseJSON.data
-  })
+  // En haal daarvan de JSON op
+  const personResponseJSON = await personResponse.json()
+
+  console.log(personResponseJSON.data);
+  
+  // personResponseJSON bevat gegevens van alle personen uit alle squads van dit jaar
+  // Je zou dat hier kunnen filteren, sorteren, of zelfs aanpassen, voordat je het doorgeeft aan de view
+
+  // Render index.liquid uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
+  // Geef ook de eerder opgehaalde squad data mee aan de view
+  response.render('index.liquid', {pizzaLovers: personResponseJSON.data })
 })
 
-app.get('/landing', async function (request, response) {  
-  response.render('landingpagina.liquid')
-})
+// app.get('/landing', async function (request, response) {  
+//   response.render('landingpagina.liquid')
+// })
+
+// app.get('/detail', async function (request, response) {  
+//   response.render('detailpagina.liquid')
+// })
 
 app.post('/', async function (request, response) {
   await fetch('https://fdnd.directus.app/items/messages/', {
