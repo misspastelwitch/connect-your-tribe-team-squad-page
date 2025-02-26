@@ -20,12 +20,12 @@ app.use(express.urlencoded({extended: true}))
 
 
 app.get('/', async function (request, response) {
-  const personResponse = await fetch('https://fdnd.directus.app/items/person/?sort=name&fields=*,squads.squad_id.name,squads.squad_id.cohort&filter={%22_and%22:[{%22squads%22:{%22squad_id%22:{%22tribe%22:{%22name%22:%22FDND%20Jaar%201%22}}}},{%22squads%22:{%22squad_id%22:{%22cohort%22:%222425%22}}},{%22squads%22:{%22squad_id%22:{%22name%22:%221G%22}}}]}')}
+  const personResponse = await fetch('https://fdnd.directus.app/items/person/?sort=name&fields=*,squads.squad_id.name,squads.squad_id.cohort&filter={%22_and%22:[{%22squads%22:{%22squad_id%22:{%22tribe%22:{%22name%22:%22FDND%20Jaar%201%22}}}},{%22squads%22:{%22squad_id%22:{%22cohort%22:%222425%22}}},{%22squads%22:{%22squad_id%22:{%22name%22:%221G%22}}}]}')
   const personResponseJSON = await messagesResponse.json()
 
-  response.render('index.liquid',{persons: personResponseJSON.data, squads: squadResponseJSON.data}){
+  response.render('index.liquid',{persons: personResponseJSON.data, squads: squadResponseJSON.data})
     teamName: teamName,
-    messages: messagesResponseJSON.data
+    messages; messagesResponseJSON.data
   })
 
 app.get('/landing', async function (request, response) {  
@@ -58,9 +58,9 @@ if (teamName == '') {
 
 app.get('/hobby/:hobby', async function (request, response) {
   console.log(request.params);
-  const favHobby = request.params.hobby;
+  const fav_hobby = request.params.hobby;
 
-  if (favHobby === 'alle-hobbies') {
+  if (fav_hobby === 'alle-hobbies') {
     const hobbies = await fetch('https://fdnd.directus.app/items/person/?sort=name&fields=*,squads.squad_id.name,squads.squad_id.cohort&filter={%22_and%22:[{%22squads%22:{%22squad_id%22:{%22tribe%22:{%22name%22:%22FDND%20Jaar%201%22}}}},{%22squads%22:{%22squad_id%22:{%22cohort%22:%222425%22}}},{%22squads%22:{%22squad_id%22:{%22name%22:%221G%22}}}]}&fields=id,name,avatar,bio,fav_book_genre');
     const hobbiesJSON = await hobbies.json();
     response.render('index.liquid', { persons: hobbiesJSON.data });
