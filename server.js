@@ -59,14 +59,6 @@ app.post('/', async function (request, response) {
   response.redirect(303, '/')
 })
 
-if (teamName == '') {
-  console.log('Voeg eerst de naam van jullie team in de code toe.')
-} else {
-  app.listen(app.get('port'), function () {
-    console.log(`Application started on http://localhost:${app.get('port')}`)
-  })
-}
-
 app.get('/hobby/:hobby', async function (request, response) {
   console.log(request.params);
   const fav_hobby = request.params.hobby;
@@ -90,3 +82,10 @@ app.get('/student/:id', async function (request, response) {
 
 
 app.set('port', process.env.PORT || 8000)
+if (teamName == '') {
+  console.log('Voeg eerst de naam van jullie team in de code toe.')
+} else {
+  app.listen(app.get('port'), function () {
+    console.log(`Application started on http://localhost:${app.get('port')}`)
+  })
+}
