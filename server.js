@@ -24,42 +24,17 @@ app.get(["/", "/filter/:foodType"], async function (request, response) {
     filterQuery = `{"_and":[{"fav_kitchen":"${foodType}"},{"squads":{"squad_id":{"tribe":{"name":"FDND Jaar 1"}}}},{"squads":{"squad_id":{"cohort":"2425"}}}]}`;
   }
 
+  const allPeopleResponse = await fetch(`https://fdnd.directus.app/items/person/?fields=fav_kitchen&limit=-1`);
+  const allPeopleJSON = await allPeopleResponse.json();
+
+  let allFoods = [...new Set(allPeopleJSON.data.map((person) => person.fav_kitchen && person.fav_kitchen.trim()).filter(Boolean))].sort();
+
   const personResponse = await fetch(
-    `https://fdnd.directus.app/items/person/?sort=name&fields=*,squads.squad_id.name,squads.squad_id.cohort&filter=${encodeURIComponent(filterQuery)}`
+    `https://fdnd.directus.app/items/person/?fields=*,squads.squad_id.name,squads.squad_id.cohort&filter=${encodeURIComponent(filterQuery)}`
   );
   const personResponseJSON = await personResponse.json();
 
-  const allPeopleResponse = await fetch(`https://fdnd.directus.app/items/person/?sort=name&fields=fav_kitchen`);
-  const allPeopleJSON = await allPeopleResponse.json();
-
-  const allFoods = [...new Set(allPeopleJSON.data.map((person) => person.fav_kitchen).filter(Boolean))].sort();
-
-  const sortedPeople = personResponseJSON.data.sort((a, b) => {
-    if (a.fav_kitchen < b.fav_kitchen) return -1;
-    if (a.fav_kitchen > b.fav_kitchen) return 1;
-
-    return a.name.localeCompare(b.name);
-  });
-
-  response.render("index.liquid", { pizzaLovers: sortedPeople, foodOptions: allFoods });
-});
-
-app.get("/hobby/:hobby", async function (request, response) {
-  console.log(request.params);
-  const fav_hobby = request.params.hobby;
-
-  let filterQuery = `{"_and":[{"squads":{"squad_id":{"tribe":{"name":"FDND Jaar 1"}}}},{"squads":{"squad_id":{"cohort":"2425"}}},{"squads":{"squad_id":{"name":"1G"}}}]}`;
-
-  if (fav_hobby !== "alle-hobbies") {
-    filterQuery = `{"_and":[{"fav_book_genre":{"_icontains":"${fav_hobby}"}},{"squads":{"squad_id":{"tribe":{"name":"FDND Jaar 1"}}}},{"squads":{"squad_id":{"cohort":"2425"}}},{"squads":{"squad_id":{"name":"1G"}}}]}`;
-  }
-
-  const hobbies = await fetch(
-    `https://fdnd.directus.app/items/person/?sort=name&fields=*,squads.squad_id.name,squads.squad_id.cohort&filter=${encodeURIComponent(filterQuery)}`
-  );
-  const hobbiesJSON = await hobbies.json();
-
-  response.render("index.liquid", { persons: hobbiesJSON.data });
+  response.render("index.liquid", { pizzaLovers: personResponseJSON.data, foodOptions: allFoods });
 });
 
 app.get("/student/:id", async function (request, response) {
