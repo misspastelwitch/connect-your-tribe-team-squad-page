@@ -7,25 +7,37 @@ document.addEventListener("DOMContentLoaded", function () {
     foodList.classList.remove("hidden");
   });
 
-  document.addEventListener("click", (event) => {
-    if (!searchInput.contains(event.target) && !foodList.contains(event.target)) {
-      foodList.classList.add("hidden");
-    }
-  });
-
   searchInput.addEventListener("input", function () {
     const searchValue = searchInput.value.toLowerCase();
     const items = foodList.getElementsByTagName("li");
+    let hasResults = false;
 
     for (let item of items) {
       const text = item.textContent.toLowerCase();
-      item.style.display = text.includes(searchValue) ? "block" : "none";
+      if (text.includes(searchValue)) {
+        item.style.display = "block";
+        hasResults = true;
+      } else {
+        item.style.display = "none";
+      }
+    }
+
+    if (hasResults) {
+      foodList.classList.remove("hidden");
+    } else {
+      foodList.classList.add("hidden");
     }
   });
 
   foodList.addEventListener("click", function (event) {
     if (event.target.tagName === "LI") {
       searchInput.value = event.target.dataset.value || event.target.textContent;
+      foodList.classList.add("hidden");
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!searchInput.contains(event.target) && !foodList.contains(event.target)) {
       foodList.classList.add("hidden");
     }
   });
