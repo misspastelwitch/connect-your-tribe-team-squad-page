@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-
   searchInput.addEventListener("input", function () {
     const searchValue = searchInput.value.toLowerCase();
     const items = foodList.getElementsByTagName("li");
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   foodList.addEventListener("click", function (event) {
     if (event.target.tagName === "LI") {
-      searchInput.value = event.target.textContent;
+      searchInput.value = event.target.dataset.value || event.target.textContent;
       foodList.classList.add("hidden");
     }
   });
@@ -45,26 +44,25 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = `/filter/${encodeURIComponent(selectedFood)}`;
     }
   });
-});
 
-  
-  // next button
-  document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("prevPerson").addEventListener("click", async function () {
-        try {
-            const response = await fetch("/"); 
-            const html = await response.text();
-            
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = html;
+  // Next Person Button
+  const prevPersonButton = document.getElementById("prevPerson");
+  if (prevPersonButton) {
+    prevPersonButton.addEventListener("click", async function () {
+      try {
+        const response = await fetch("/");
+        const html = await response.text();
 
-            const newPerson = tempDiv.querySelector(".music-player");
-            document.querySelector(".music-player").innerHTML = newPerson.innerHTML;
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
 
-        } catch (error) {
-            console.error("Error fetching new person:", error);
+        const newPerson = tempDiv.querySelector(".music-player");
+        if (newPerson) {
+          document.querySelector(".music-player").innerHTML = newPerson.innerHTML;
         }
+      } catch (error) {
+        console.error("Error fetching new person:", error);
+      }
     });
+  }
 });
-
-// end next button
