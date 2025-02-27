@@ -12,18 +12,29 @@
 <div class="content">
   <div class="music-player">
   
-    <img src="" class="image">
+    <img src="https://spinning.cat/Images/oiia.png" class="image">
 
- 
+  {% for pizzaLover in pizzaLovers %}
+    <img
+      src="{{ pizzaLover.avatar }}"
+      alt="{{ pizzaLover.name }}"
+      height="100"
+      width="100">
+    <p>{{ pizzaLover.name }}</p>
+    <p>Favorite Food: {{ pizzaLover.fav_kitchen }}</p>
+    <p>Favorite Color:
+      <span style="width: 20px; height: 20px; display: inline-block; background-color: {{ pizzaLover.fav_color }}"></span>
+    </p>
+  {% endfor %}
+    
     <input type="range" value="0" id="progress">
 
     <div class="controls">
-      <div class="fas fa-backward"></div>
-      <div class="fas fa-forward"></div>
+      <div class="fas fa-backward" id="prevPerson"></div>
+      <div class="fas fa-forward" id="nextPerson"></div>
     </div>
 
-  </div>
-</div>
-
+ 
   <body>  
     <h1>{{ Squad Page }}</h1>
+    

@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+
   searchInput.addEventListener("input", function () {
     const searchValue = searchInput.value.toLowerCase();
     const items = foodList.getElementsByTagName("li");
@@ -45,3 +46,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+  
+  // next button
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("prevPerson").addEventListener("click", async function () {
+        try {
+            const response = await fetch("/"); 
+            const html = await response.text();
+            
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+
+            const newPerson = tempDiv.querySelector(".music-player");
+            document.querySelector(".music-player").innerHTML = newPerson.innerHTML;
+
+        } catch (error) {
+            console.error("Error fetching new person:", error);
+        }
+    });
+});
+
+// end next button
