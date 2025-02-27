@@ -14,7 +14,7 @@
   
     <img src="https://spinning.cat/Images/oiia.png" class="image">
 
-  {% for pizzaLover in pizzaLovers %}
+    {% for pizzaLover in pizzaLovers %}
     <img
       src="{{ pizzaLover.avatar }}"
       alt="{{ pizzaLover.name }}"
@@ -25,7 +25,7 @@
     <p>Favorite Color:
       <span style="width: 20px; height: 20px; display: inline-block; background-color: {{ pizzaLover.fav_color }}"></span>
     </p>
-  {% endfor %}
+    {% endfor %}
     
     <input type="range" value="0" id="progress">
 
@@ -33,7 +33,8 @@
       <div class="fas fa-backward" id="prevPerson"></div>
       <div class="fas fa-forward" id="nextPerson"></div>
     </div>
-
+  </div>
+</div>
  
   <body>  
     <h1>{{ Squad Page }}</h1>
