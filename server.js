@@ -30,11 +30,22 @@ app.get(["/", "/filter/:foodType"], async function (request, response) {
   let allFoods = [...new Set(allPeopleJSON.data.map((person) => person.fav_kitchen && person.fav_kitchen.trim()).filter(Boolean))].sort();
 
   const personResponse = await fetch(
-    `https://fdnd.directus.app/items/person/?fields=*,squads.squad_id.name,squads.squad_id.cohort&filter=${encodeURIComponent(filterQuery)}`
+    `https://fdnd.directus.app/items/person/?fields=*,squads.squad_id.name,squads.squad_id.cohort,fav_kitchen&filter=${encodeURIComponent(
+      filterQuery
+    )}`
   );
   const personResponseJSON = await personResponse.json();
 
-  response.render("index.liquid", { pizzaLovers: personResponseJSON.data, foodOptions: allFoods });
+  const sortedPeople = personResponseJSON.data
+    .filter((person) => person.fav_kitchen && person.fav_kitchen.trim())
+    .sort((a, b) => {
+      if (a.fav_kitchen < b.fav_kitchen) return -1;
+      if (a.fav_kitchen > b.fav_kitchen) return 1;
+
+      return a.name.localeCompare(b.name);
+    });
+
+  response.render("index.liquid", { pizzaLovers: sortedPeople, foodOptions: allFoods });
 });
 
 app.get("/student/:id", async function (request, response) {
