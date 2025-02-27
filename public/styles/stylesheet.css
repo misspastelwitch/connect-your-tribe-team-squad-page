@@ -12,7 +12,7 @@ body{
 /* Typografie */
   --font-size-text: 16px;
 
-  --font-family-text: "Rubik Bubbles", sans-serif;
+  --font-family-text: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   --font-family-details: "Arial", sans-serif;
 
   --font-family: var(--font-family-text);
