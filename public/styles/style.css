@@ -6,7 +6,8 @@
 }
 
 .content {
-  width: 100%;
+  width: 100dvw;
+  height: 100dvh;
   background-color: #333;
   display: flex;
   align-items: center;
@@ -100,8 +101,8 @@ nav .button {
 }
 
 #food-search:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #1ed760;
+  box-shadow: 0 0 5px rgba(0, 255, 119, 0.5);
 }
 
 #food-list {
@@ -135,6 +136,6 @@ nav .button {
 }
 
 #food-list li:hover {
-  background-color: #007bff;
+  background-color: #1ed760;
   color: white;
 }
