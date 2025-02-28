@@ -139,3 +139,20 @@ nav .button {
   background-color: #1ed760;
   color: white;
 }
+
+#reset-filter {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#reset-filter:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}

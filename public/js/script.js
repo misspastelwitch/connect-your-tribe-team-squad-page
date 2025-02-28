@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("food-search");
   const foodList = document.getElementById("food-list");
+  const resetButton = document.getElementById("reset-filter");
 
   searchInput.addEventListener("focus", () => {
     foodList.classList.remove("hidden");
@@ -41,6 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
       redirectToFilter(searchInput.value);
     }
+  });
+
+  resetButton.addEventListener("click", function () {
+    searchInput.value = "";
+    foodList.classList.add("hidden");
+    window.location.href = `/`;
   });
 
   function redirectToFilter(selectedFood) {
