@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const searchInput = document.getElementById("food-search");
   const foodList = document.getElementById("food-list");
-  const filterButton = document.getElementById("apply-filter");
 
   searchInput.addEventListener("focus", () => {
     foodList.classList.remove("hidden");
@@ -33,27 +32,46 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target.tagName === "LI") {
       searchInput.value = event.target.dataset.value || event.target.textContent;
       foodList.classList.add("hidden");
+      redirectToFilter(searchInput.value);
     }
   });
 
-  document.addEventListener("click", (event) => {
-    if (!searchInput.contains(event.target) && !foodList.contains(event.target)) {
-      foodList.classList.add("hidden");
+  searchInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      redirectToFilter(searchInput.value);
     }
   });
 
-  filterButton.addEventListener("click", function () {
-    const selectedFood = searchInput.value.trim();
+  function redirectToFilter(selectedFood) {
+    const trimmedFood = selectedFood.trim().toLowerCase();
 
-    if (!selectedFood) {
+    if (!trimmedFood) {
       alert("Please enter or select a food type.");
       return;
     }
 
-    if (selectedFood.toLowerCase() === "all foods") {
-      window.location.href = `/`;
-    } else {
-      window.location.href = `/filter/${encodeURIComponent(selectedFood)}`;
+    const items = foodList.getElementsByTagName("li");
+    let matchedFood = null;
+
+    for (let item of items) {
+      if (item.textContent.toLowerCase() === trimmedFood) {
+        matchedFood = item.textContent;
+        break;
+      }
+    }
+
+    if (!matchedFood) {
+      alert("No matching food found. Please select from the list.");
+      return;
+    }
+
+    window.location.href = `/filter/${encodeURIComponent(matchedFood)}`;
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!searchInput.contains(event.target) && !foodList.contains(event.target)) {
+      foodList.classList.add("hidden");
     }
   });
 
